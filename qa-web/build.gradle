@@ -1,0 +1,33 @@
+plugins {
+    id "io.qameta.allure" version "2.9.6"
+}
+
+allure {
+    version = '2.13.8'
+}
+
+dependencies {
+    implementation project(":qa-commons")
+
+    // selenium-java
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.0.0'
+
+    //Automatic download webDriver
+    implementation group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '4.3.1'
+
+    implementation group: 'org.apache.commons', name: 'commons-text', version: '1.9'
+}
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntimeOnly
+    }
+}
+
+task runWeb(type:  Test) {
+    useTestNG()
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+    testLogging.showStandardStreams = true
+    // set JVM arguments for the test JVM(s)
+    scanForTestClasses = false
+}

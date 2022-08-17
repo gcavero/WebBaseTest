@@ -1,0 +1,40 @@
+allprojects {
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'pmd'
+
+    group 'qa-core'
+    version '3.0'
+    sourceCompatibility = 11
+    targetCompatibility = 11
+
+    pmd {
+        toolVersion = '6.0.0'
+    }
+    tasks.withType(Pmd) {
+        ruleSets = ["java-basic", "java-braces", "java-unnecessary", "java-strictexception"]
+        reports {
+            xml.required = false
+            html.required = true
+        }
+    }
+
+    dependencies {
+        implementation group: 'io.cucumber', name: 'cucumber-testng', version: '7.2.3'
+        implementation group: 'io.cucumber', name: 'cucumber-java', version: '7.2.3'
+        testImplementation group: 'io.cucumber', name: 'cucumber-picocontainer', version: '5.7.0'
+        testImplementation group: 'io.qameta.allure', name: 'allure-cucumber5-jvm', version: '2.13.8'
+    }
+}
+    wrapper {
+        gradleVersion = '7.4'
+    }
+
+    static def getDate() {
+        return new Date().format('yyyyMMddHHmmss')
+    }

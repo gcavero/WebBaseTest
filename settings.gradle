@@ -1,0 +1,4 @@
+rootProject.name = 'qa-core'
+include 'qa-web'
+include 'qa-commons'
+
